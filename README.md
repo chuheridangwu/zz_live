@@ -2,15 +2,13 @@
 
 A new Flutter project.
 
-## Getting Started
+项目分为四个模块
+1.  首页: 观看直播视频，分为热门、最新、分类根据分类进行显示和隐藏
+2.  视频：最新和热门视频观看，主播发布的动态
+3. 排行榜
+4. 个人中心
+5. 登录模块，登录使用邮箱进行注册登录
 
-This project is a starting point for a Flutter application.
+需要接入的功能：视频播放、商品内购、本地存储、模型转换（模型这里要注意，因为都是抓的别人的接口，需要转换模型）、网络请求
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+数据解析这里使用自定义json解析，统一抓包数据，方便之后的管理。
