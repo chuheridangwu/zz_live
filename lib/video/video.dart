@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class VideoListView extends StatefulWidget {
@@ -8,8 +9,13 @@ class VideoListView extends StatefulWidget {
 class _VideoListViewState extends State<VideoListView> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      
+    return Scaffold(
+        appBar: AppBar(
+          title: Text("Video"),
+        ),
+        body: Center(
+          child: Text("Hellow world"),
+        ),
     );
   }
 }
