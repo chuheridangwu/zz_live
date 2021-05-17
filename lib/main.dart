@@ -35,7 +35,8 @@ class MyApp extends StatelessWidget {
   // 创建主题颜色
   ThemeData createAppThemeData(){
     return ThemeData(
-      primaryColor: Colors.yellow,
+      primarySwatch: Colors.yellow,
+      iconTheme: IconThemeData(color: Colors.yellow), //用于Icon颜色
       visualDensity: VisualDensity.adaptivePlatformDensity,
     );
   }
