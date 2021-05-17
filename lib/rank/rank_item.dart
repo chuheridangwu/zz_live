@@ -25,7 +25,9 @@ class RankItem extends StatelessWidget {
               width: 8,
             ),
             nameAndLevelWidget(),
-            Spacer(),
+            SizedBox(
+              width: 5,
+            ),
             Text(
               "${user.coins} 钻石",
               textAlign: TextAlign.right,
@@ -70,16 +72,20 @@ class RankItem extends StatelessWidget {
     if (level > 15) {
       level = 15;
     }
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          user.userName,
-          style: TextStyle(fontSize: 16, color: Colors.black),
-        ),
-        SizedBox(height: 5,),
-        Image.asset("images/level/vip_$level.png"),
-      ],
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            user.userName,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(fontSize: 15, color: Colors.black),
+          ),
+          SizedBox(height: 5,),
+          Image.asset("images/level/vip_$level.png"),
+        ],
+      ),
     );
   }
 }
