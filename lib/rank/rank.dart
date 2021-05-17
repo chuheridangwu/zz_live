@@ -10,45 +10,33 @@ class RankView extends StatefulWidget {
 }
 
 class _RankViewState extends State<RankView> {
+  List<UserInfo> _infos = [];
+  final ScrollController _scrollController = ScrollController();
 
-List<UserInfo> _infos = [];
-final ScrollController _scrollController = ScrollController();
-
-@override
+  @override
   void initState() {
     super.initState();
 
-    RankServe().getWeekRank(1).then((value){
-      _infos.addAll(value);
-    });
-
-    _scrollController.addListener(() {
-      
+    RankServe().getWeekRank(1).then((value) {
+      setState(() {
+        _infos.addAll(value);
+      });
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Rank"),
-        ),
-        body: ListView.builder(
+      appBar: AppBar(
+        title: Text("Rank"),
+      ),
+      body: ListView.builder(
           controller: _scrollController,
           itemCount: _infos.length,
-          itemBuilder: (ctx,index){
+          itemBuilder: (ctx, index) {
             var user = _infos[index];
-            return RankItem(user,index);
-          }
-          ),
-          floatingActionButton: FloatingActionButton(child: Text("data"),onPressed: (){
-             RankServe().getWeekRank(1).then((value){
-               setState(() {
-                               _infos.addAll(value);
-       
-                              });
-    });
-          },),
+            return RankItem(user, index + 1);
+          }),
     );
   }
 }

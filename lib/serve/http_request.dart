@@ -45,6 +45,8 @@ static final Dio _dio = Dio();
    // 发送网络请求
    try {
        Response response = await _dio.request(path,options: options);
+        // 打印当前结果
+      print("当前请求接口是:$path\n返回结果是:${response.data}");  
       // 返回请求结果
       return response.data;
    } on DioError catch (e) {
@@ -59,24 +61,23 @@ static final Dio _dio = Dio();
 /*
 
 // 直播列表
-https://api.huangzewei.me/v1/live/stream/list?BSID=1771159533&BVER=8.5.4.2233&SSID=0&app=4&build=18E212&bundle_id=com.remix.miaomiao&count=20&did=43cba54fd9fb4731b208e152e0f5c7f2&lan=0&locale=zh-Hans_JP&mod=iPhone10%2C4&net=ReachableViaWiFi&os_and_version=iOS%2014.5.1&page=1&rdid=00000000-0000-0000-0000-000000000000&sdk=8.5.4&sig=478522c1fb2a2698a5f16913db25916b&source=2&source_id=358760294882794721&sys=ios_14.5.1&token=83e7dfc9e999b99ecc1c3efede940d5b&ts=1621045448668&ver=8.5.4
+https://api.95xiu.com/show/anchor_list_v4.php?address=no%20anthorize&area_id=11&channel=i300585&client_code_version=8&client_side=3&device_id=D2xJC4ZYKQt3Dsq%2BTkqDNH7YtPAIoM3%2FYiu%2FVoHhrFT3oX4e&device_type=iPhone12%2C1&idfa=EFFF1D7E-2F44-4F32-B1A7-A9F200FFF77B&imei=B579FE8C-5F2C-4110-912E-5DB314394D95&is_intl_pack=0&is_qiye=0&isresssxapp=YImh89YJ&packname=mm.live.ios.cn&page_index=1&project_type=3&session_id=64cd33bd3d3aaa25c3fd9717626f219b&type=9&uid=159340708&version=1&version_code=94004
 
-// 最新的直播列表
-https://api.huangzewei.me/v1/live/stream/newest_list?BSID=1771159533&BVER=8.5.4.2233&SSID=0&app=4&build=18E212&bundle_id=com.remix.miaomiao&count=20&did=43cba54fd9fb4731b208e152e0f5c7f2&lan=0&locale=zh-Hans_JP&mod=iPhone10%2C4&net=ReachableViaWiFi&os_and_version=iOS%2014.5.1&page=1&rdid=00000000-0000-0000-0000-000000000000&sdk=8.5.4&sig=1ab345bee8b9b76e4be8ea4c720328a8&source=2&source_id=358760294882794721&sys=ios_14.5.1&token=83e7dfc9e999b99ecc1c3efede940d5b&ts=1621045815050&ver=8.5.4
+// 推荐列表
+https://api.95xiu.com/show/anchor_list_v4.php?address=no%20anthorize&area_id=11&channel=i300585&client_code_version=8&client_side=3&device_id=D2xJC4ZYKQt3Dsq%2BTkqDNH7YtPAIoM3%2FYiu%2FVoHhrFT3oX4e&device_type=iPhone12%2C1&idfa=EFFF1D7E-2F44-4F32-B1A7-A9F200FFF77B&imei=B579FE8C-5F2C-4110-912E-5DB314394D95&is_intl_pack=0&is_qiye=0&isresssxapp=YImh89YJ&packname=mm.live.ios.cn&page_index=0&project_type=3&session_id=64cd33bd3d3aaa25c3fd9717626f219b&type=21&uid=159340708&version=1&version_code=94004
 
-// 送礼物周榜
-https://live.huangzewei.me/coupon/send/rank/week?BSID=1771159533&BVER=8.5.4.2233&SSID=0&app=4&build=18E212&bundle_id=com.remix.miaomiao&count=10&did=43cba54fd9fb4731b208e152e0f5c7f2&lan=0&locale=zh-Hans_JP&mod=iPhone10%2C4&net=ReachableViaWiFi&os_and_version=iOS%2014.5.1&page=1&rdid=00000000-0000-0000-0000-000000000000&sdk=8.5.4&sig=f4c5e0eb67eb5f9db766238a82fde12c&source=2&source_id=358760294882794721&sys=ios_14.5.1&token=83e7dfc9e999b99ecc1c3efede940d5b&ts=1621045968322&ver=8.5.4
+// 短视频列表
+https://api.95xiu.com/app/shortvideo/short_video.php?address=no%20anthorize&channel=i300585&client_code_version=8&client_side=3&device_id=D2xJC4ZYKQt3Dsq%2BTkqDNH7YtPAIoM3%2FYiu%2FVoHhrFT3oX4e&device_type=iPhone12%2C1&idfa=EFFF1D7E-2F44-4F32-B1A7-A9F200FFF77B&imei=B579FE8C-5F2C-4110-912E-5DB314394D95&is_intl_pack=0&is_qiye=0&isresssxapp=YImh89YJ&packname=mm.live.ios.cn&page=0&session_id=64cd33bd3d3aaa25c3fd9717626f219b&uid=159340708&version_code=94004
 
-// 收礼物周榜
-https://live.huangzewei.me/coupon/receive/rank/week?BSID=1771159533&BVER=8.5.4.2233&SSID=0&app=4&build=18E212&bundle_id=com.remix.miaomiao&count=10&did=43cba54fd9fb4731b208e152e0f5c7f2&lan=0&locale=zh-Hans_JP&mod=iPhone10%2C4&net=ReachableViaWiFi&os_and_version=iOS%2014.5.1&page=1&rdid=00000000-0000-0000-0000-000000000000&sdk=8.5.4&sig=9df238cf16cdf17a22469e6873f0adff&source=2&source_id=358760294882794721&sys=ios_14.5.1&token=83e7dfc9e999b99ecc1c3efede940d5b&ts=1621045990124&ver=8.5.4
+// 短视频地址
+https://api.95xiu.com/app/shortvideo/browse_video.php?address=no%20anthorize&anchor_id=160595133&channel=i300585&client_code_version=8&client_side=3&device_id=D2xJC4ZYKQt3Dsq%2BTkqDNH7YtPAIoM3%2FYiu%2FVoHhrFT3oX4e&device_type=iPhone12%2C1&idfa=EFFF1D7E-2F44-4F32-B1A7-A9F200FFF77B&imei=B579FE8C-5F2C-4110-912E-5DB314394D95&is_intl_pack=0&is_qiye=0&isresssxapp=YImh89YJ&packname=mm.live.ios.cn&session_id=64cd33bd3d3aaa25c3fd9717626f219b&uid=159340708&version_code=94004&video_id=44271
 
-//动态 精选视频
-https://api.huangzewei.me/v1/feed/index_alpha?BSID=1771159533&BVER=8.5.4.2233&SSID=0&app=4&build=18E212&bundle_id=com.remix.miaomiao&did=43cba54fd9fb4731b208e152e0f5c7f2&lan=0&locale=zh-Hans_JP&mod=iPhone10%2C4&net=ReachableViaWiFi&order=inc&os_and_version=iOS%2014.5.1&rdid=00000000-0000-0000-0000-000000000000&score=0&sdk=8.5.4&sig=93f1cf28bc401278483b1e8f6287d6a9&source=2&source_id=358760294882794721&sys=ios_14.5.1&token=83e7dfc9e999b99ecc1c3efede940d5b&ts=1621046328308&ver=8.5.4
+// 女周星榜
+https://api.95xiu.com/app/anchorguard/guard_rank.php?address=no%20anthorize&channel=i300585&client_code_version=8&client_side=3&device_id=D2xJC4ZYKQt3Dsq%2BTkqDNH7YtPAIoM3%2FYiu%2FVoHhrFT3oX4e&device_type=iPhone12%2C1&idfa=EFFF1D7E-2F44-4F32-B1A7-A9F200FFF77B&imei=B579FE8C-5F2C-4110-912E-5DB314394D95&is_intl_pack=0&is_qiye=0&isresssxapp=YImh89YJ&packname=mm.live.ios.cn&session_id=64cd33bd3d3aaa25c3fd9717626f219b&time_passage=2&type=2&uid=159340708&version_code=94004
 
-// 动态 随机视频
-https://api.huangzewei.me/v1/feed/recommend?BSID=1771159533&BVER=8.5.4.2233&SSID=0&app=4&build=18E212&bundle_id=com.remix.miaomiao&count=11&did=43cba54fd9fb4731b208e152e0f5c7f2&lan=0&lat=&locale=zh-Hans_JP&lon=&mod=iPhone10%2C4&net=ReachableViaWiFi&os_and_version=iOS%2014.5.1&page=1&rdid=00000000-0000-0000-0000-000000000000&recommend=0&sdk=8.5.4&sig=7bbb42e5ffe8e9e67c42b9efa56c4df5&source=2&source_id=358760294882794721&sys=ios_14.5.1&token=83e7dfc9e999b99ecc1c3efede940d5b&ts=1621046492863&ver=8.5.4
+// 男周星榜
+https://api.95xiu.com/app/anchorguard/guard_rank.php?address=no%20anthorize&channel=i300585&client_code_version=8&client_side=3&device_id=D2xJC4ZYKQt3Dsq%2BTkqDNH7YtPAIoM3%2FYiu%2FVoHhrFT3oX4e&device_type=iPhone12%2C1&idfa=EFFF1D7E-2F44-4F32-B1A7-A9F200FFF77B&imei=B579FE8C-5F2C-4110-912E-5DB314394D95&is_intl_pack=0&is_qiye=0&isresssxapp=YImh89YJ&packname=mm.live.ios.cn&session_id=64cd33bd3d3aaa25c3fd9717626f219b&time_passage=2&type=1&uid=159340708&version_code=94004
 
-// 获取个人信息
-https://api.huangzewei.me/v1/user/349902936970682009?BSID=1771159533&BVER=8.5.4.2233&SSID=0&app=4&build=18E212&bundle_id=com.remix.miaomiao&did=43cba54fd9fb4731b208e152e0f5c7f2&lan=0&locale=zh-Hans_JP&mod=iPhone10%2C4&net=ReachableViaWiFi&os_and_version=iOS%2014.5.1&rdid=00000000-0000-0000-0000-000000000000&sdk=8.5.4&sig=edb0d8e0e1ba0184e5e707cf844cd61f&source=2&source_id=358760294882794721&sys=ios_14.5.1&token=83e7dfc9e999b99ecc1c3efede940d5b&ts=1621046560303&ver=8.5.4
-
+// 个人信息
+https://api.95xiu.com/myprofile/profileinfo.php?address=no%20anthorize&channel=i300585&client_code_version=8&client_side=3&device_id=D2xJC4ZYKQt3Dsq%2BTkqDNH7YtPAIoM3%2FYiu%2FVoHhrFT3oX4e&device_type=iPhone12%2C1&idfa=EFFF1D7E-2F44-4F32-B1A7-A9F200FFF77B&imei=B579FE8C-5F2C-4110-912E-5DB314394D95&is_intl_pack=0&is_qiye=0&isresssxapp=YImh89YJ&packname=mm.live.ios.cn&session_id=64cd33bd3d3aaa25c3fd9717626f219b&uid=146219406&version_code=94004
  */

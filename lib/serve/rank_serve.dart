@@ -1,36 +1,14 @@
-import 'package:dio/dio.dart';
+import 'dart:convert';
 import 'package:zz_live/serve/app_data_model.dart';
 import 'package:zz_live/serve/http_request.dart';
 
 class RankServe{
 
+// 总页数
 int total = 1;
 
   // 获取送礼周榜
 Future<List<UserInfo>> getWeekRank(int page) async {
-    var params = {
-      "count":"10",
-      "page":"1",
-      "BSID":"1771159533",
-      "BVER":"8.5.4.2233",
-      "SSID":"0",
-      "app":"4",
-      "build":"18E212",
-      "bundle_id":"com.remix.miaomiao",
-      "did":"43cba54fd9fb4731b208e152e0f5c7f2",
-      "lan":"0",
-      "locale":"zh-Hans_JP",
-      "mod":"iPhone10.2,4",
-      "net":"ReachableViaWiFi",
-      "rdid":"00000000-0000-0000-0000-000000000000",
-      "sdk":"8.5.4",
-      "sys":"ios_14.5.1",
-      "token":"83e7dfc9e999b99ecc1c3efede940d5b",
-      "source_id":"358760294882794721",
-      "ver":"8.5.4",
-      "ts": DateTime.now().millisecondsSinceEpoch,
-      "sig":"9df238cf16cdf17a22469e6873f0adff",
-    };
 
   // 发起网络请求 
   if (page > total) {
@@ -38,17 +16,17 @@ Future<List<UserInfo>> getWeekRank(int page) async {
   }
 
   List<UserInfo> infos = [];
-  var result = await HttpRequrst.request("https://live.huangzewei.me/coupon/receive/rank/week?BSID=1771159533&BVER=8.5.4.2233&SSID=0&app=4&build=18E212&bundle_id=com.remix.miaomiao&count=10&did=43cba54fd9fb4731b208e152e0f5c7f2&lan=0&locale=zh-Hans_JP&mod=iPhone10%2C4&net=ReachableViaWiFi&os_and_version=iOS%2014.5.1&page=${page}&rdid=00000000-0000-0000-0000-000000000000&sdk=8.5.4&sig=9df238cf16cdf17a22469e6873f0adff&source=2&source_id=358760294882794721&sys=ios_14.5.1&token=83e7dfc9e999b99ecc1c3efede940d5b&ts=1621045990124&ver=8.5.4");
-  
-  total = result["c"];
-  var baseUrl = result["t"]["ap"];
-  for (Map item in result["f"]) {
-    var name = item["n"];
-    var header = item["a"];
-    var level = item["la"];
-    var coins = item["c"];
+  var result = await HttpRequrst.request("https://api.95xiu.com/app/anchorguard/guard_rank.php?address=no%20anthorize&channel=i300585&client_code_version=8&client_side=3&device_id=D2xJC4ZYKQt3Dsq%2BTkqDNH7YtPAIoM3%2FYiu%2FVoHhrFT3oX4e&device_type=iPhone11,2C1&idfa=0000000-0000-0000-0000-000000000&imei=0000000-0000-0000-0000-000000000&is_intl_pack=0&is_qiye=0&isresssxapp=YImh89YJ&packname=mm.live.ios.cn&session_id=64cd33bd3d3aaa25c3fd9717626f219b&time_passage=2&type=2&uid=159340703&version_code=94004");
+  ///先将String类型数据json编码为Map数据
+  Map<String, dynamic> mapData =  jsonDecode(result);
+  for (Map item in mapData["data"]) {
+    var name = item["nickname"];
+    var header = item["head_image"];
+    var level = item["star_level"];
+    var uid = int.parse(item["uid"]);
+    var coins = int.parse(item["star_integral"]);
     
-    var user = UserInfo(name,baseUrl + header,level,coins);
+    var user = UserInfo(name,header,uid,level,coins);
     infos.add(user);
   }
   
