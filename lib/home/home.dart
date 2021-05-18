@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:zz_live/home/home_item.dart';
+import 'package:zz_live/live/live.dart';
 import 'package:zz_live/serve/app_data_model.dart';
 import 'package:zz_live/serve/home_serve.dart';
 
@@ -11,7 +12,7 @@ class HomeLiveView extends StatefulWidget {
 
 class _HomeLiveViewState extends State<HomeLiveView> {
   // 主播数据
-  List<UserInfo> anchorList = [];
+  List<Anchor> anchorList = [];
   // 切换大小图
   int _rowCount = 2;
   // 当前页
@@ -60,7 +61,12 @@ class _HomeLiveViewState extends State<HomeLiveView> {
           ),
           itemBuilder: (ctx, index) {
             final anchor = anchorList[index];
-            return HomeItem(anchor);
+            return HomeItem(anchor,(){
+              print("------- object");
+              Navigator.push(context, MaterialPageRoute(builder: (_){
+               return LiveRoom.from(anchorList,index,_page);
+              }));
+            });
           }),
       floatingActionButton: FloatingActionButton(
         child: Icon(_rowCount == 1 ? Icons.menu : Icons.apps),
