@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // class PersonView extends StatelessWidget {
@@ -21,56 +22,54 @@ import 'package:video_player/video_player.dart';
 
 class PersonView extends StatefulWidget {
   @override
-  _VideoAppState createState() => _VideoAppState();
+  _PersonViewState createState() => _PersonViewState();
 }
 
-class _VideoAppState extends State<PersonView> {
-  VideoPlayerController _controller;
-// rtmp://push.mlive.in.th/live/58af3be5008588f968c7c2eba7c71933	
-//  https://liveplay.guojianglive.com/live/9180_1365882.flv
-  @override
-  void initState() {
-    super.initState();
-    _controller = VideoPlayerController.network(
-        'rtmp://push.mlive.in.th/live/58af3be5008588f968c7c2eba7c71933	')
-      ..initialize().then((_) {
-        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
-        setState(() {});
-      });
-  }
-
+class _PersonViewState extends State<PersonView> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Video Demo',
-      home: Scaffold(
-        body: Center(
-          child: _controller.value.isInitialized
-              ? AspectRatio(
-                  aspectRatio: _controller.value.aspectRatio,
-                  child: VideoPlayer(_controller),
-                )
-              : Container(),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            setState(() {
-              _controller.value.isPlaying
-                  ? _controller.pause()
-                  : _controller.play();
-            });
-          },
-          child: Icon(
-            _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
-          ),
-        ),
+    return Container(
+      child: Stack(fit: StackFit.expand,
+      children: [
+        Text("data"),
+        Positioned(
+              left: 5,
+              right: 5,
+              top: 10,
+              child: SafeArea(
+                child:  Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 15,
+                      ),
+                      Image.asset("images/room/room_public.png",width: 30,height: 30,),
+                     
+                      IconButton(
+                        iconSize: 30,
+                          icon: Image.asset("images/room/room_gift.png", width: 35,height: 35,),
+                          onPressed: () {}),
+                      SizedBox(
+                        width: 25,
+                      ),
+                      IconButton(
+                        iconSize: 15,
+                          icon: Image.asset("images/room/room_share.png",),
+                          onPressed: () {}),
+                      IconButton(
+                          icon: Image.asset("images/room/room_close.png",),
+                          onPressed: () {}),
+                      SizedBox(
+                        width: 5,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+        Text("111")
+      ],
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _controller.dispose();
   }
 }

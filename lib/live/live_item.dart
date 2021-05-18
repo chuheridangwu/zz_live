@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 import 'package:zz_live/serve/app_data_model.dart';
@@ -37,7 +38,6 @@ class _LiveItemState extends State<LiveItem> {
   void dispose() {
     super.dispose();
     print("视频播放器销毁 - ${widget.anchor.liveAddres}");
-    _videoController.removeListener(() {});
     _videoController.dispose();
   }
 
@@ -45,19 +45,56 @@ class _LiveItemState extends State<LiveItem> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-    return _videoController.value.isInitialized
-        ? Container(
-            width: size.width,
-            height: size.height,
-            child: VideoPlayer(_videoController),
-          )
-        : Container(
-            child: Image.network(
-              widget.anchor.headerIcon,
-              width: size.width,
-              height: size.height,
-              fit: BoxFit.cover,
-            ),
-          );
+    return Container(
+      width: size.width,
+      height: size.height,
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          _videoController.value.isInitialized
+              ? VideoPlayer(_videoController)
+              : Image.network(
+                  widget.anchor.headerIcon,
+                  width: size.width,
+                  height: size.height,
+                  fit: BoxFit.cover,
+                ),
+          Positioned(
+              left: 5,
+              right: 5,
+              bottom: 10,
+              child: SafeArea(
+                child:  Row(
+                    children: [
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Image.asset("images/room/room_public.png",width: 30,height: 30,),
+                     
+                      // IconButton(
+                      //     icon: Image.asset("images/room/room_gift.png"),
+                      //     onPressed: () {}),
+                      // SizedBox(
+                      //   width: 5,
+                      // ),
+                      // IconButton(
+                      //     icon: Image.asset("images/room/room_share"),
+                      //     onPressed: () {}),
+                      // SizedBox(
+                      //   width: 5,
+                      // ),
+                      // IconButton(
+                      //     icon: Image.asset("images/room/room_close"),
+                      //     onPressed: () {}),
+                      // SizedBox(
+                      //   width: 5,
+                      // ),
+                    ],
+                  ),
+                ),
+              )
+        ],
+      ),
+    );
   }
 }
