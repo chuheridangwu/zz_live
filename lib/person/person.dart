@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -18,6 +20,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:video_player/video_player.dart';
 
 class PersonView extends StatefulWidget {
@@ -26,6 +29,23 @@ class PersonView extends StatefulWidget {
 }
 
 class _PersonViewState extends State<PersonView> {
+
+
+   @override
+  void initState() {
+    super.initState();
+    getJsonData();
+  }
+
+  void getJsonData() async {
+    // 读取json文件
+    String jsonString = await rootBundle.loadString("assets/gift.json");
+    final result = json.decode(jsonString);
+    for (var item in result["gift_data"]) {
+      print("----- $item");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(

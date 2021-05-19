@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'login/login.dart';
 import 'home/home.dart';
 import 'video/video.dart';
 import 'rank/rank.dart';
 import 'person/person.dart';
-import 'demo.dart';
 
 
-void main() {
-  runApp(MyApp());
-}
+  void main() {
+      WidgetsFlutterBinding.ensureInitialized();
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((_) {
+        runApp(new MyApp());
+            SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
+      });
+
+  }
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.

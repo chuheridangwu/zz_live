@@ -9,25 +9,24 @@ class LiveRoom extends StatefulWidget {
   int index;
   final int page;
 
-  LiveRoom.from(this.rooms,this.index,this.page);
+  LiveRoom.from(this.rooms, this.index, this.page);
 
   @override
   _LiveRoomState createState() => _LiveRoomState();
 }
 
 class _LiveRoomState extends State<LiveRoom> {
-
   var _pageController;
   var isLoadMore = true;
 
   @override
-    void initState() {
-      super.initState();
-      _pageController =  PageController(initialPage: widget.index);     
-    }
+  void initState() {
+    super.initState();
+    _pageController = PageController(initialPage: widget.index);
+  }
 
   // 滚动视图
-  void onPageChangeVlaue(int page){
+  void onPageChangeVlaue(int page) {
     if (page == widget.rooms.length - 1 && isLoadMore) {
       getAnchorListData();
       return;
@@ -50,14 +49,16 @@ class _LiveRoomState extends State<LiveRoom> {
 
   @override
   Widget build(BuildContext context) {
-    return PageView.builder(
-      onPageChanged: onPageChangeVlaue,
-      controller: _pageController,
-      scrollDirection: Axis.vertical,
-      itemCount: widget.rooms.length,
-      itemBuilder: (ctx,index){
-        final Anchor anchor = widget.rooms[index];
-      return LiveItem(anchor);
-    });
+    return Material(
+      child: PageView.builder(
+          onPageChanged: onPageChangeVlaue,
+          controller: _pageController,
+          scrollDirection: Axis.vertical,
+          itemCount: widget.rooms.length,
+          itemBuilder: (ctx, index) {
+            final Anchor anchor = widget.rooms[index];
+            return LiveItem(anchor);
+          }),
+    );
   }
 }

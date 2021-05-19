@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:share/share.dart';
 import 'package:video_player/video_player.dart';
 import 'package:zz_live/serve/app_data_model.dart';
 
@@ -51,50 +52,62 @@ class _LiveItemState extends State<LiveItem> {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          _videoController.value.isInitialized
+          liveViewWidget(size),
+          bottomButtons(),
+        ],
+      ),
+    );
+  }
+
+  // 直播界面
+  Widget liveViewWidget(Size size){
+    return _videoController.value.isInitialized
               ? VideoPlayer(_videoController)
               : Image.network(
                   widget.anchor.headerIcon,
                   width: size.width,
                   height: size.height,
                   fit: BoxFit.cover,
-                ),
-          Positioned(
-              left: 5,
-              right: 5,
-              bottom: 10,
-              child: SafeArea(
-                child:  Row(
-                    children: [
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Image.asset("images/room/room_public.png",width: 30,height: 30,),
-                     
-                      // IconButton(
-                      //     icon: Image.asset("images/room/room_gift.png"),
-                      //     onPressed: () {}),
-                      // SizedBox(
-                      //   width: 5,
-                      // ),
-                      // IconButton(
-                      //     icon: Image.asset("images/room/room_share"),
-                      //     onPressed: () {}),
-                      // SizedBox(
-                      //   width: 5,
-                      // ),
-                      // IconButton(
-                      //     icon: Image.asset("images/room/room_close"),
-                      //     onPressed: () {}),
-                      // SizedBox(
-                      //   width: 5,
-                      // ),
-                    ],
+                );
+  }
+
+  // 底部按钮widget
+  Widget bottomButtons() {
+    return Positioned(
+        left: 5,
+        right: 5,
+        bottom: 10,
+        child: SafeArea(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              IconButton(
+                  icon: Image.asset(
+                    "images/room/room_public.png",
                   ),
-                ),
-              )
-        ],
-      ),
-    );
+                  onPressed: () {}),
+              Expanded(child: Container()),
+              IconButton(
+                  icon: Image.asset(
+                    "images/room/room_gift.png",
+                  ),
+                  onPressed: () {}),
+              IconButton(
+                  icon: Image.asset(
+                    "images/room/room_share.png",
+                  ),
+                  onPressed: () {
+                    Share.share('check out my website https://example.com');
+                  }),
+              IconButton(
+                  icon: Image.asset(
+                    "images/room/room_close.png",
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  }),
+            ],
+          ),
+        ));
   }
 }
