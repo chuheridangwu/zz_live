@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'login/login.dart';
@@ -6,23 +8,26 @@ import 'video/video.dart';
 import 'rank/rank.dart';
 import 'person/person.dart';
 
-
-  void main() {
-      WidgetsFlutterBinding.ensureInitialized();
-    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
-        runApp(new MyApp());
-            SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
-      });
-
-  }
+    runApp(new MyApp());
+    if (Platform.isAndroid) {
+      //设置Android头部的导航栏透明
+      SystemUiOverlayStyle systemUiOverlayStyle =
+          SystemUiOverlayStyle(statusBarColor: Colors.transparent);
+      SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
+    }
+  });
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'ZZ Live',
+      title: 'ZLive',
       debugShowCheckedModeBanner: false,
       theme: createAppThemeData(),
       home: MainPageWidget(),
@@ -39,7 +44,7 @@ class MyApp extends StatelessWidget {
   }
 
   // 创建主题颜色
-  ThemeData createAppThemeData(){
+  ThemeData createAppThemeData() {
     return ThemeData(
       primarySwatch: Colors.yellow,
       iconTheme: IconThemeData(color: Colors.yellow), //用于Icon颜色
@@ -54,38 +59,38 @@ class MainPageWidget extends StatefulWidget {
 }
 
 class _MainPageWidgetState extends State<MainPageWidget> {
-   int _currentIndex = 0;
+  int _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(
-        index: _currentIndex,
-        children: pages,
-      ),
-      bottomNavigationBar:BottomNavigationBar(
+        body: IndexedStack(
+          index: _currentIndex,
+          children: pages,
+        ),
+        bottomNavigationBar: BottomNavigationBar(
           currentIndex: _currentIndex,
-          onTap: (index){
+          onTap: (index) {
             setState(() {
-                          _currentIndex = index;
-                        });
+              _currentIndex = index;
+            });
           },
           type: BottomNavigationBarType.fixed,
           fixedColor: Colors.black,
           items: navBarItems,
-        )
-    );
+        ));
   }
 }
 
 class MyNavBarItem extends BottomNavigationBarItem {
-  MyNavBarItem(String title,IconData icon,IconData activeIcon) : super(label: title,icon: Icon(icon),activeIcon: Icon(activeIcon));  
+  MyNavBarItem(String title, IconData icon, IconData activeIcon)
+      : super(label: title, icon: Icon(icon), activeIcon: Icon(activeIcon));
 }
 
 List<BottomNavigationBarItem> navBarItems = [
-  MyNavBarItem("Home",Icons.home,Icons.home_outlined),
-  MyNavBarItem("Video",Icons.play_circle_fill,Icons.play_circle_outline),
-  MyNavBarItem("Rank",Icons.explore,Icons.explore),
-  MyNavBarItem("Me",Icons.person,Icons.person_outline)
+  MyNavBarItem("Home", Icons.home, Icons.home_outlined),
+  MyNavBarItem("Video", Icons.play_circle_fill, Icons.play_circle_outline),
+  MyNavBarItem("Rank", Icons.explore, Icons.explore),
+  MyNavBarItem("Me", Icons.person, Icons.person_outline)
 ];
 
 List<Widget> pages = [

@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
 import 'package:video_player/video_player.dart';
+import 'package:zz_live/live/gift_list_view.dart';
 import 'package:zz_live/serve/app_data_model.dart';
 
 // ignore: must_be_immutable
@@ -91,7 +92,14 @@ class _LiveItemState extends State<LiveItem> {
                   icon: Image.asset(
                     "images/room/room_gift.png",
                   ),
-                  onPressed: () {}),
+                  onPressed: () {
+                    showModalBottomSheet(
+                      barrierColor: Colors.black12,
+                      backgroundColor: Colors.black12,
+                      context: context, builder: (_){
+                     return  GiftListView();
+                    } );
+                  }),
               IconButton(
                   icon: Image.asset(
                     "images/room/room_share.png",

@@ -47,9 +47,12 @@ class _HomeLiveViewState extends State<HomeLiveView> {
   void getAnchorListData() {
     HomeServe().homeListData(_page).then((value) {
       setState(() {
+        if (_page == 1) {
+          anchorList = [];
+        }
         anchorList.addAll(value);
         _refreshController.refreshCompleted();
-        _refreshController.resetNoData();
+        _refreshController.loadComplete();
       });
     });
   }
@@ -67,6 +70,9 @@ class _HomeLiveViewState extends State<HomeLiveView> {
           onRefresh: _onRefresh,
           onLoading: _onLoading,
           header: WaterDropHeader(),
+          footer: ClassicFooter(
+            loadStyle: LoadStyle.ShowWhenLoading,
+          ),
           controller: _refreshController,
           child: gardViewWidget()),
       floatingActionButton: floatingBtn(),

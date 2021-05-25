@@ -28,6 +28,7 @@ class _RankViewState extends State<RankView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text("Rank"),
       ),
       body: ListView.builder(

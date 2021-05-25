@@ -7,10 +7,17 @@ class VideoListView extends StatefulWidget {
 }
 
 class _VideoListViewState extends State<VideoListView> {
+
+  @override
+    void initState() {
+      super.initState();
+      print(" ----  initState");
+    }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          centerTitle: true,
           title: Text("Video"),
         ),
         body: Center(
