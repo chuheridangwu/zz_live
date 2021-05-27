@@ -10,5 +10,7 @@ class UserInfo{
 class Anchor extends UserInfo{
   final String liveAddres;  // 直播地址
   final int watchNum; // 观看人数
-  Anchor(this.liveAddres,this.watchNum,String userName, String headerIcon, int uid,  int level,int coins) : super(userName, headerIcon, uid, level, coins);
+  int width;
+  int height;
+  Anchor(this.liveAddres,this.watchNum,String userName, String headerIcon, int uid,  int level,int coins,{this.width,this.height}) : super(userName, headerIcon, uid, level, coins);
 }

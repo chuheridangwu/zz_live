@@ -36,7 +36,7 @@ class _GiftListViewState extends State<GiftListView>
   Widget build(BuildContext context) {
     return SafeArea(
       child: Container(
-        color: Colors.transparent,
+        color: Colors.black38,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.end,

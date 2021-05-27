@@ -1,5 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:shake_animation_widget/shake_animation_widget.dart';
 import 'package:zz_live/live/gift_manager.dart';
 
 // ignore: must_be_immutable
@@ -20,7 +22,6 @@ class _GiftItemState extends State<GiftItem> {
   // 选中其中一个Item
   void _selectedItem() {
     setState(() {
-      // 清除上一个item的值
       // 如果重复点击的是一个item
       if (widget.gift.giftId == GiftManager().currentGift.giftId) {
         int index = widget.gift.numbers.indexOf(_number) + 1;
@@ -32,6 +33,8 @@ class _GiftItemState extends State<GiftItem> {
       GiftManager().currentGift = widget.gift;
     });
     widget.gift.isSelected = true;
+    // 礼物图标抖动
+    _shakeAnimationController.start(shakeCount: 1);
 
     widget.callback(widget);
   }
@@ -47,23 +50,28 @@ class _GiftItemState extends State<GiftItem> {
             clipBehavior: Clip.none,
             children: [
               Positioned(
-                right: -5,
-                top: -5,
+                  right: -5,
+                  top: -5,
                   child: widget.gift.isSelected
                       ? Container(
-                        height: 12,
-                        decoration: BoxDecoration(color: Colors.red,borderRadius: BorderRadius.all(Radius.circular(6))),
-                        child: Text(
+                          height: 12,
+                          decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(6))),
+                          child: Text(
                             "  x$_number  ",
                             style: TextStyle(
-                                color: Colors.white, fontWeight: FontWeight.bold,fontSize: 10),
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 10),
                           ),
-                      )
+                        )
                       : Container()),
               Container(
                 decoration: widget.gift.isSelected
                     ? BoxDecoration(
-                      color: Colors.white12,
+                        color: Colors.white12,
                         borderRadius: BorderRadius.all(Radius.circular(5)))
                     : BoxDecoration(),
                 child: Column(
@@ -83,11 +91,17 @@ class _GiftItemState extends State<GiftItem> {
   }
 
   // 顶部图片
+  ShakeAnimationController _shakeAnimationController =
+      new ShakeAnimationController();
   Widget giftIconWidget() {
-    return Image.network(
-      widget.gift.giftIcon,
-      width: widget.gift.isSelected ? 45 : 40,
-    );
+    return ShakeAnimationWidget(
+        shakeAnimationController: _shakeAnimationController,
+        shakeAnimationType: ShakeAnimationType.TopBottomShake,
+        isForward: widget.gift.isSelected,
+        shakeCount: 1,
+        child: CachedNetworkImage(
+            imageUrl: widget.gift.giftIcon,
+            width: widget.gift.isSelected ? 45 : 40));
   }
 
   // 礼物名称
@@ -110,7 +124,9 @@ class _GiftItemState extends State<GiftItem> {
           size: 13,
         ),
       ),
-      TextSpan(text: widget.gift.price, style: TextStyle(color: Colors.white,fontSize: 12))
+      TextSpan(
+          text: widget.gift.price,
+          style: TextStyle(color: Colors.white, fontSize: 12))
     ]));
   }
 }

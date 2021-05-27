@@ -64,7 +64,7 @@ class _HomeLiveViewState extends State<HomeLiveView> {
         centerTitle: true,
         title: Text("Home"),
       ),
-      body: SmartRefresher(
+      body: anchorList.length != 0 ?  SmartRefresher(
           enablePullDown: true,
           enablePullUp: true,
           onRefresh: _onRefresh,
@@ -74,7 +74,7 @@ class _HomeLiveViewState extends State<HomeLiveView> {
             loadStyle: LoadStyle.ShowWhenLoading,
           ),
           controller: _refreshController,
-          child: gardViewWidget()),
+          child: gardViewWidget()) : Container(),
       floatingActionButton: floatingBtn(),
     );
   }

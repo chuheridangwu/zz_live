@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:zz_live/serve/app_data_model.dart';
 
@@ -11,7 +12,7 @@ HomeItem(this.anchor,this.onPress);
       child: Card(
         child: Container(
           decoration: BoxDecoration(
-            image: DecorationImage(image: NetworkImage(anchor.headerIcon),fit: BoxFit.fill),
+            image: DecorationImage(image: CachedNetworkImageProvider(anchor.headerIcon),fit: BoxFit.fill),
           ),
           child: bottomWidget(),
         ),
